@@ -7,7 +7,7 @@ X = None
 y = None
 
 # load the dataset
-def load(path = 'test-training-data.csv'):
+def load(path = '/app/test-training-data.csv'):
     dataset = loadtxt(path, delimiter=',')
     # split into input (X) and output (y) variables
     global X, y
@@ -16,6 +16,7 @@ def load(path = 'test-training-data.csv'):
 
 def train():
     # define the keras model
+    load()
     model = Sequential()
     model.add(Dense(12, input_dim=8, activation='relu'))
     model.add(Dense(8, activation='relu'))
@@ -23,7 +24,8 @@ def train():
     # compile the keras model
     model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
     # fit the keras model on the dataset
-    model.fit(X, y, epochs=150, batch_size=10)
+    print(X)
+    model.fit(X, y, epochs=150, batch_size=10, steps_per_epoch=None)
 
     # evaluate the keras model
     # _, accuracy = model.evaluate(X, y)
