@@ -1,0 +1,12 @@
+FROM python:3.7-slim-buster
+
+COPY ../model/requirements.txt /app/
+
+RUN pip install -r /app/requirements.txt
+
+# train model
+RUN python "/app/train.py"
+
+COPY . /app
+
+CMD ["python", "/app/main.py"]
