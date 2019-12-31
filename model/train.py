@@ -29,7 +29,7 @@ def train():
     # _, accuracy = model.evaluate(X, y)
     # print('Accuracy: %.2f' % (accuracy*100))
 
-    # save(model)
+    save(model)
 
 def save(model):
     # serialize model to JSON

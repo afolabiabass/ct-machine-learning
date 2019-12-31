@@ -8,7 +8,9 @@ services:
 
   modelserver:
     image: afolabiabass/modelserver
-    build: ./docker/model.docker
+    build:
+      context: .
+      dockerfile: ./docker/model.docker
     depends_on:
     - redis
     networks:
@@ -28,9 +30,11 @@ services:
 
   webserver:
     image: afolabiabass/webserver
-    build: ./docker/web.docker
+    build:
+      context: .
+      dockerfile: ./docker/web.docker
     ports:
-    - "80:80"
+    - "8080:8000"
     networks:
     - machine_learning_network
     depends_on:

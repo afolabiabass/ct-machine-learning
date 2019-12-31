@@ -1,7 +1,9 @@
 FROM tiangolo/uvicorn-gunicorn-fastapi:python3.7
 
-COPY ../web/requirements.txt /app/
+COPY web/requirements.txt /app/
 
 RUN pip install -r /app/requirements.txt
 
-COPY . /app
+COPY web/ /app
+
+RUN uvicorn main:app --reload
