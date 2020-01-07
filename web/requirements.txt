@@ -1,6 +1,5 @@
-tensorflow
-keras
-Pillow
+fastapi
+uvicorn
 redis
 python-multipart
 python-dotenv
