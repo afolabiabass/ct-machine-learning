@@ -7,9 +7,9 @@ from fastapi import FastAPI, HTTPException
 from starlette.requests import Request
 
 app = FastAPI()
-db = redis.StrictRedis('localhost')  # host=os.environ.get("REDIS_HOST"))
+db = redis.StrictRedis(host=os.environ.get("REDIS_HOST"))
 
-CLIENT_MAX_TRIES = 100  # int(os.environ.get("CLIENT_MAX_TRIES"))
+CLIENT_MAX_TRIES = int(os.environ.get("CLIENT_MAX_TRIES"))
 
 
 @app.get("/")
@@ -47,7 +47,7 @@ def predict(request: Request):
                 break
 
             # Sleep for a small amount to give the model a chance to classify the input image
-            time.sleep(float(0.25))
+            time.sleep(float(os.environ.get('CLIENT_SLEEP')))
 
             # Indicate that the request was a success
             data["success"] = True

@@ -18,7 +18,7 @@ services:
     env_file:
     - .env
     environment:
-    - SERVER_SLEEP=0.25  # Time in ms between each poll by model server against Redis
+    - SERVER_SLEEP=0.25
     - BATCH_SIZE=32
     deploy:
       replicas: 1

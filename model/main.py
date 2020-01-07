@@ -5,9 +5,12 @@ import sys
 import time
 import numpy as np
 import redis
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Connect to Redis server
-db = redis.StrictRedis(host='localhost')
+db = redis.StrictRedis(host=os.environ.get('REDIS_HOST'))
 
 model = None
 
@@ -29,8 +32,8 @@ def process():
         # Pop off multiple images from Redis queue atomically
         with db.pipeline() as pipe:
             # queue = []
-            pipe.lrange('query_queue', 0, int(32) - 1)
-            pipe.ltrim('query_queue', int(32), -1)
+            pipe.lrange(os.environ.get('QUERY_QUEUE'), 0, int(os.environ.get('BATCH_SIZE')) - 1)
+            pipe.ltrim(os.environ.get('QUERY_QUEUE'), int(os.environ.get('BATCH_SIZE')), -1)
             queue, _ = pipe.execute()
 
         for q in queue:
@@ -46,7 +49,7 @@ def process():
             db.set(key, json.dumps(result.tolist()))
 
         # Sleep for a small amount
-        time.sleep(float(0.25))
+        time.sleep(float(os.environ.get('SERVER_SLEEP')))
 
 
 if __name__ == "__main__":
