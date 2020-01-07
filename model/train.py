@@ -25,29 +25,32 @@ def loadFromFile(path='test-training-data-2.csv'):
 
 
 def loadFromDb(path='test-training-data-2.csv'):
-    mydb = mysql.connector.connect(
-        host=os.environ.get('DB_HOST'),
-        port=os.environ.get('DB_PORT'),
-        user=os.environ.get('DB_USERNAME'),
-        passwd=os.environ.get('DB_PASSWORD'),
-        database=os.environ.get('DB_DATABASE')
-    )
+    try:
+        mydb = mysql.connector.connect(
+            host=os.environ.get('DB_HOST'),
+            port=os.environ.get('DB_PORT'),
+            user=os.environ.get('DB_USERNAME'),
+            passwd=os.environ.get('DB_PASSWORD'),
+            database=os.environ.get('DB_DATABASE')
+        )
 
-    mycursor = mydb.cursor()
-    mycursor.execute(os.environ.get('TRAINING_DATA_SQL_QUERY'))
-    data = mycursor.fetchall()
+        mycursor = mydb.cursor()
+        mycursor.execute(os.environ.get('TRAINING_DATA_SQL_QUERY'))
+        data = mycursor.fetchall()
 
-    with open(path, "w", newline='') as csv_file:
-        c = csv.writer(csv_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-        # Iterate over `data` and write to the csv file
-        for row in data:
-            c.writerow(row)
+        with open(path, "w", newline='') as csv_file:
+            c = csv.writer(csv_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+            # Iterate over `data` and write to the csv file
+            for row in data:
+                c.writerow(row)
 
-    dataset = loadtxt(path, delimiter=',')
-    # split into input (X) and output (y) variables
-    global X, y
-    X = dataset[:, 0:4]
-    y = dataset[:, 4]
+        dataset = loadtxt(path, delimiter=',')
+        # split into input (X) and output (y) variables
+        global X, y
+        X = dataset[:, 0:4]
+        y = dataset[:, 4]
+    except:
+        print('Could not load data from database')
 
 
 def train():
