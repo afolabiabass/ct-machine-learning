@@ -10,7 +10,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Connect to Redis server
-db = redis.StrictRedis(host=os.environ.get('REDIS_HOST'))
+db = redis.StrictRedis(host='redis')
 
 model = None
 
