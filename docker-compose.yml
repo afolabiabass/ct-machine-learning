@@ -34,7 +34,7 @@ services:
       context: .
       dockerfile: ./docker/web.docker
     ports:
-    - "8080:8000"
+    - "80:8000"
     networks:
     - machine_learning_network
     depends_on:
