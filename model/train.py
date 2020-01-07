@@ -56,7 +56,7 @@ def loadFromDb(path='test-training-data-2.csv'):
 def train():
     try:
         # define the keras model
-        loadFromDb()
+        loadFromFile()
         model = Sequential()
         model.add(Dense(12, input_dim=4, activation='relu'))
         model.add(Dense(8, activation='relu'))
